@@ -1,7 +1,7 @@
 import os
 
 
-# Cadastro do usuario
+# Cadastro do usuario:
 
 ARQUIVO_USUARIOS = "usuarios.txt"
 
@@ -10,43 +10,63 @@ def carregar_usuarios():
     if os.path.exists(ARQUIVO_USUARIOS):
         with open(ARQUIVO_USUARIOS, "r") as f:
             for linha in f:
-                usuario, senha = linha.strip().split(";")
-                usuarios[usuario] = senha
+                email, senha = linha.strip().split(";")
+                usuarios[email] = senha
     return usuarios
 
-def salvar_usuario(usuario, senha):
+def salvar_usuario(email, senha):
     with open(ARQUIVO_USUARIOS, "a") as f:
-        f.write(f"{usuario};{senha}\n") # Salva o usuario e a senha do cadastro
+        f.write(f"{email};{senha}\n") # Salva o usuario e a senha do cadastro
 
 def cadastrar():
-    print("\n Cadastro de Novo Usuário ")
+    print("\n Cadastro de Novo Usuário: ")
     usuarios = carregar_usuarios()
-    usuario = input("Novo usuário: ")
-    if usuario in usuarios:
-        print("Erro: Usuário já existe.")
+    email = input("Email: ")
+    dominios_validos = ["@gmail.com","@outlook.com"]
+    if not any(email.endswith(dominio) for dominio in dominios_validos):
+        print ("Email inválido,porfavor use apenas @gmail.com ou @outlook.com")
+        return
+    if email in usuarios:
+        print(" Erro: Email já está sendo utilizado,tente novamente com outro email.")
         return
     senha = input("Senha: ")
-    salvar_usuario(usuario, senha)
+    confirmar = input("Confirme a senha: ")
+
+    if senha != confirmar:
+        print("Erro: As senhas não coincidem.")
+        return
+
+    if len(senha) < 8:
+        print(" Erro: A senha é muito curta (Mínimo de 8 caracteres).")  
+        return
+    if not any(c.isupper() for c in senha):
+        print(" Erro: A senha deve conter ao menos 1 letra maiúscula.")
+        return
+    if not any(c.isdigit() for c in senha):
+        print(" Erro: A senha deve conter ao menos 1 número.")
+        return
+
+    salvar_usuario(email, senha)
     print("Usuário cadastrado com sucesso!")
 
 def login():
     print("\n Login ")
     usuarios = carregar_usuarios()
-    usuario = input("Usuário: ")
+    email = input("Email: ")
     senha = input("Senha: ")
-    if usuario in usuarios and usuarios[usuario] == senha:
-        print("Login bem-sucedido! Bem-vindo,", usuario)
-        menu_studybuddy(usuario)
+    if email in usuarios and usuarios[email] == senha:
+        print("Login bem-sucedido! Bem-vindo!")
+        menu_studybuddy(email)
     else:
-        print("Erro: Usuário ou senha incorretos.")
+        print(" Erro: Usuário ou senha incorretos.")
 
-# Menu principal StudyBuddy
+# Menu principal StudyBuddy:
 
-def menu_studybuddy(usuario):
+def menu_studybuddy(email):
     while True:
         print(f"n/Bem-vindo ao StudyBuddy!")                            
-        print("1-Criar cronograma de estudo automatico")
-        print("2-Iniciar timer (Tecnica Pomodoro)")
+        print("1-Criar cronograma de estudo personalizado")
+        print("2-Iniciar timer (Técnica Pomodoro)")
         print("3-Definir metas semanais")
         print("4-Sair")
 
@@ -66,19 +86,36 @@ def menu_studybuddy(usuario):
         else:
             print("Opção inválida. Tente novamente.")
 
-# Funcionalidades
+# Funcionalidades:
 
 def criar_cronograma():
-    print("\n criando cronograma automatico...")
-    materias = ["Matematica", "Portugues", "historia", "fisica", "Ingles"]
-    for i, materia in enumerate(materias, 1):
-        print(f"Dia {i}: Estudar {materia}")
+    print("\n Criador de Cronograma de Estudo Personalizado")
+    dias_semana = ["Segunda", "Terça", "Quarta", 
+                   "Quinta", "Sexta"]
+    
+    incluir_sabado = input("Deseja incluir sábado no cronograma? (s/n): ").lower() == "s"
+    incluir_domingo = input("Deseja incluir domingo no cronograma? (s/n): ").lower() == "s"
 
-# Execucao do script
+    if incluir_sabado:
+        dias_semana.append("Sábado")
+    if incluir_domingo:
+        dias_semana.append("Domingo")
+    
+    cronograma = {}
+
+    for dia in dias_semana:
+        materia = input(f"Qual matéria você quer estudar na {dia}? ")
+        cronograma[dia] = materia
+
+    print("\n Seu cronograma ficou assim:")
+    for dia, materia in cronograma.items():
+        print(f"{dia}: {materia}")
+
+# Execucao do script:
 
 def menu_inicial():
     while True:
-        print("\n Bem vindo ao StudyPal! ")
+        print("\n Bem vindo ao StudyBuddy! ")
         print("1 - Login")
         print("2 - Cadastrar")
         print("3 - Sair")
@@ -94,6 +131,6 @@ def menu_inicial():
         else:
             print("Opçao invalida.")
 
-# Iniciar o programa
+# Iniciar o script:
 
 menu_inicial()
