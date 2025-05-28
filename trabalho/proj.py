@@ -23,6 +23,7 @@ def salvar_usuarios(usuarios):
 def salvar_usuario(email, senha):
     with open(ARQUIVO_USUARIOS, "a") as f:
         f.write(f"{email};{senha}\n") 
+        
 def validar_senha(senha):
     if len(senha) < 8:
         print(" Erro: A senha é muito curta (Mínimo de 8 caracteres).")  
