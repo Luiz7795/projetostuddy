@@ -7,7 +7,7 @@ import time
 ARQUIVO_USUARIOS = "usuarios.txt"
 
 def carregar_usuarios(): 
-    usuarios = {}  # Cria um txt vazio para guardar nomes e senhas
+    usuarios = {}  
     if os.path.exists(ARQUIVO_USUARIOS):
         with open(ARQUIVO_USUARIOS, "r") as f:
             for linha in f:
@@ -22,8 +22,7 @@ def salvar_usuarios(usuarios):
 
 def salvar_usuario(email, senha):
     with open(ARQUIVO_USUARIOS, "a") as f:
-        f.write(f"{email};{senha}\n") # Salva o usuario e a senha do cadastro
-
+        f.write(f"{email};{senha}\n") 
 def validar_senha(senha):
     if len(senha) < 8:
         print(" Erro: A senha é muito curta (Mínimo de 8 caracteres).")  
