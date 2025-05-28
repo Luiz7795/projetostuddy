@@ -78,7 +78,7 @@ def atualizar_usuario():
     senha_atual = usuarios[email]
     nova_senha = input("Digite a nova senha: ")
     if nova_senha == senha_atual:
-        print("Erro: A nova senha não pode ser igual a atual.")
+        print("Erro: A nova senha não pode ser igual a senha anterior.")
         return
     if not validar_senha(nova_senha):
         return
@@ -88,7 +88,7 @@ def atualizar_usuario():
         return
     usuarios[email] = nova_senha
     salvar_usuarios(usuarios)
-    print("Senha atualizada com sucesso.")
+    print("Senha atualizada com sucesso!")
 
 def deletar_usuario():
     usuarios = carregar_usuarios()
@@ -100,7 +100,7 @@ def deletar_usuario():
 
     senha = input("Digite a senha da conta: ")
     if usuarios[email] != senha:
-        print("Erro: É necessário a senha correta para deletar a conta.")
+        print("Erro: É necessário a senha correta para conseguir deletar a conta.")
         return
 
     confirmacao = input("Tem certeza que deseja deletar sua conta? Digite 'SIM' para confirmar(Esta operação é irreversível): ")
@@ -110,7 +110,7 @@ def deletar_usuario():
 
     del usuarios[email]
     salvar_usuarios(usuarios)
-    print("Usuário deletado com sucesso.")
+    print("Usuário deletado com sucesso!")
 
 def login():
     print("\n Login ")
@@ -126,7 +126,7 @@ def login():
 
 def menu_studybuddy(email):
     while True:
-        print(f" Bem-vindo ao StudyBuddy! ")                            
+        print(f"  Bem-vindo!  ")                            
         print("1-Criar cronograma de estudos personalizado")
         print("2-Iniciar timer (Técnica Pomodoro)")
         print("3-Definir metas semanais de estudo")
@@ -141,7 +141,7 @@ def menu_studybuddy(email):
         elif opcao == "3":
             definir_metas()
         elif opcao == "4":
-            print(" Saindo do Studybuddy.")
+            print(" Indo para menu inicial...")
             break
         else:
             print("Opção inválida,tente novamente.")
@@ -183,7 +183,7 @@ def carregar_cronogramas():
     return cronogramas
 
 def criar_cronograma():
-    print("Criador de cronograma de estudos.")
+    print("Criador de cronograma de estudos:")
 
     cronogramas_existentes = carregar_cronogramas()
     if cronogramas_existentes:
@@ -233,10 +233,11 @@ def criar_cronograma():
     print("\nCronograma personalizado gerado:")
     for dia, materia in cronograma.items():
         print(f"{dia}: Estudar {materia}.")
+        
 # 2- Timer pomodoro
 
 def timer_pomodoro():
-    print("\n Iniciando a Timer...")
+    print("\n Iniciando o Timer...")
 
     try:
         ciclos = int(input("Quantos ciclos você deseja fazer? (Ex: 4): "))
@@ -249,10 +250,10 @@ def timer_pomodoro():
         countdown(25 * 60)  
 
         if ciclo % 4 == 0:
-            print(" Faça uma pausa: 15 minutos.")
+            print(" Intervalo: 15 minutos de pausa.")
             countdown(15 * 60)  
         else:
-            print(" Pequena pausa: 5 minutos")
+            print(" Descanse um pouco: 5 minutos de pausa.")
             countdown(5 * 60)  
 
     print(" Todos os ciclos foram concluídos, bom trabalho! ")
@@ -302,7 +303,7 @@ def definir_metas():
         print("  Nenhuma meta anterior encontrada. ")
 
     while True:
-        materia = input("Digite o nome da matéria (ou pressione Enter para finalizar): ")
+        materia = input("Digite o nome da matéria que você deseja estudar (ou pressione Enter para finalizar): ")
         if materia == "":
             break
         try:
@@ -313,7 +314,7 @@ def definir_metas():
             metas[materia] = horas
             progresso[materia] = progresso.get(materia, 0)
         except ValueError:
-            print("Entrada inválida. Digite um número.")
+            print("Entrada inválida, digite um número.")
 
     if not metas:
         print("Nenhuma meta foi definida.")
@@ -342,7 +343,7 @@ def definir_metas():
             salvar_em_txt(metas, progresso)
             print(f"Progresso atualizado: {progresso[materia]}/{metas[materia]} horas")
             if progresso[materia] >= metas[materia]:
-                print("Meta atingida ou superada!")
+                print("Meta atingida ou superada,muito bem!")
             else:
                 restante = metas[materia] - progresso[materia]
                 print(f"Faltam {restante:.2f} horas para atingir a meta de {materia}.")
@@ -355,8 +356,8 @@ def definir_metas():
         meta = metas[materia]
         status = "Cumprida" if estudado >= meta else "Incompleta"
         print(f"- {materia}: {estudado}/{meta} horas – {status}")
-    
-    ARQUIVO_METAS = "metas_estudo.txt"
+
+# Menu do CRUD:
 
 def menu_crud():
     while True:
@@ -380,11 +381,12 @@ def menu_crud():
         else:
             print("Opção inválida. Tente novamente.")
 
-# Execucao do script:
+# Execução do script:
 
 def menu_inicial():
     while True:
-        print("\n Bem vindo ao StudyBuddy! ")
+        print("  Seja muito bem-vindo ao StudyBuddy! ")
+        
         print("1 - Login")
         print("2 - Realizar Cadastro")
         print("3 - Sair")
@@ -399,7 +401,7 @@ def menu_inicial():
             print("Saindo.")
             break
         else:
-            print("Opção invalida.")
+            print("Opção invalida,tente novamente.")
 
 # Iniciar o programa:
 
