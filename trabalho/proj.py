@@ -403,6 +403,6 @@ def menu_inicial():
         else:
             print("Opção invalida,tente novamente.")
 
-# Iniciar o programa:
+# Iniciar o código:
 
 menu_inicial()
