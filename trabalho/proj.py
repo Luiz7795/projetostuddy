@@ -42,10 +42,10 @@ def cadastrar():
     email = input("Email: ")
     dominios_validos = ["@gmail.com","@outlook.com"]
     if not any(email.endswith(dominio) for dominio in dominios_validos):
-        print ("Email inválido,porfavor use apenas @gmail.com ou @outlook.com")
+        print ("n/Email inválido, porfavor use apenas @gmail.com ou @outlook.com")
         return
     if email in usuarios:
-        print(" Erro: Email já está sendo utilizado,tente novamente com outro email.")
+        print("/nErro: Email já está sendo utilizado,tente novamente com outro email.")
         return
     senha = input("Senha: ")
     if not validar_senha(senha):
