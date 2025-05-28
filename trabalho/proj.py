@@ -6,6 +6,8 @@ import time
 
 ARQUIVO_USUARIOS = "usuarios.txt"
 
+ARQUIVO_USUARIOS = "usuarios.txt"
+
 def carregar_usuarios(): 
     usuarios = {}  
     if os.path.exists(ARQUIVO_USUARIOS):
@@ -15,48 +17,44 @@ def carregar_usuarios():
                 usuarios[email] = senha
     return usuarios
 
-def salvar_usuarios(usuarios):
+def salvar_usuarios(usuarios): 
     with open(ARQUIVO_USUARIOS, "w") as f:
         for email, senha in usuarios.items():
             f.write(f"{email};{senha}\n")
 
-def salvar_usuario(email, senha):
-    with open(ARQUIVO_USUARIOS, "a") as f:
-        f.write(f"{email};{senha}\n") 
-        
 def validar_senha(senha):
     if len(senha) < 8:
-        print(" Erro: A senha é muito curta (Mínimo de 8 caracteres).")  
+        print("Erro: A senha é muito curta (mínimo de 8 caracteres).")  
         return False
     if not any(c.isupper() for c in senha):
-        print(" Erro: A senha deve conter ao menos 1 letra maiúscula.")
+        print("Erro: A senha deve conter ao menos 1 letra maiúscula.")
         return False
     if not any(c.isdigit() for c in senha):
-        print(" Erro: A senha deve conter ao menos 1 número.")
+        print("Erro: A senha deve conter ao menos 1 número.")
         return False
     return True 
     
 def cadastrar():
-    print("\n Cadastro de Novo Usuário: ")
+    print("\nCadastro de novo usuário:")
     usuarios = carregar_usuarios()
     email = input("Email: ")
-    dominios_validos = ["@gmail.com","@outlook.com"]
+    dominios_validos = ["@gmail.com", "@outlook.com"]
     if not any(email.endswith(dominio) for dominio in dominios_validos):
-        print ("n/Email inválido, porfavor use apenas @gmail.com ou @outlook.com")
+        print("Email inválido. Por favor, use apenas @gmail.com ou @outlook.com.")
         return
     if email in usuarios:
-        print("/nErro: Email já está sendo utilizado,tente novamente com outro email.")
+        print("Erro: E-mail já está em uso.")
         return
     senha = input("Senha: ")
     if not validar_senha(senha):
         return
     confirmar = input("Confirme a senha: ")
-
     if senha != confirmar:
         print("Erro: As senhas não coincidem.")
         return
 
-    salvar_usuario(email, senha)
+    usuarios[email] = senha
+    salvar_usuarios(usuarios)  
     print("Usuário cadastrado com sucesso!")
 
 def ler_usuarios():
@@ -78,7 +76,7 @@ def atualizar_usuario():
     senha_atual = usuarios[email]
     nova_senha = input("Digite a nova senha: ")
     if nova_senha == senha_atual:
-        print("Erro: A nova senha não pode ser igual a senha anterior.")
+        print("Erro: A nova senha não pode ser igual à senha anterior.")
         return
     if not validar_senha(nova_senha):
         return
@@ -100,10 +98,10 @@ def deletar_usuario():
 
     senha = input("Digite a senha da conta: ")
     if usuarios[email] != senha:
-        print("Erro: É necessário a senha correta para conseguir deletar a conta.")
+        print("Erro: É necessário fornecer a senha correta para excluir a conta.")
         return
 
-    confirmacao = input("Tem certeza que deseja deletar sua conta? Digite 'SIM' para confirmar(Esta operação é irreversível): ")
+    confirmacao = input("Tem certeza que deseja deletar sua conta? Digite 'SIM' para confirmar (esta operação é irreversível): ")
     if confirmacao.upper() != "SIM":
         print("Operação cancelada.")
         return
@@ -111,7 +109,7 @@ def deletar_usuario():
     del usuarios[email]
     salvar_usuarios(usuarios)
     print("Usuário deletado com sucesso!")
-
+    
 def login():
     print("\n Login ")
     usuarios = carregar_usuarios()
