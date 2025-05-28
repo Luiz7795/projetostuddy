@@ -384,7 +384,7 @@ def menu_crud():
 def menu_inicial():
     while True:
         print("  Seja muito bem-vindo ao StudyBuddy! ")
-        print("/n1 - Login")
+        print("1 - Login")
         print("2 - Realizar Cadastro")
         print("3 - Sair")
 
